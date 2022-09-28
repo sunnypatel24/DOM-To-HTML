@@ -10,6 +10,19 @@ xmlhttp.open("GET", url, false);
 xmlhttp.send();
 let DOM = xmlhttp.responseText;
 console.log(DOM);
+chrome.pageCapture.saveAsMHTML({ tabId: 1 }, function () {
+  let f = new File([DOM], "DOM.html", { type: "text/html" });
+
+  let a = document.createElement("a");
+  //a.href = window.URL.createObjectURL(new Blob([DOM], { type: "text/html" }));
+  a.href = window.URL.createObjectURL(f);
+  a.download = "DOM.html";
+  a.textContent = "Download here";
+  document.body.appendChild(a);
+  // document.querySelector('body').append(a);
+  a.click();
+  document.body.removeChild(a);
+});
 //console.log(url);
 
 // const a = document.createElement('a')
@@ -63,17 +76,17 @@ console.log(DOM);
 // xmlhttp.open("GET", url, false);
 // xmlhttp.send();
 // //console.log(xmlhttp.responseText);
-let f = new File([DOM], "DOM.html", { type: "text/html" });
+// let f = new File([DOM], "DOM.html", { type: "text/html" });
 
-let a = document.createElement("a");
-//a.href = window.URL.createObjectURL(new Blob([DOM], { type: "text/html" }));
-a.href = window.URL.createObjectURL(f);
-a.download = "demo.html";
-a.textContent = "Download here";
-document.body.appendChild(a);
-// document.querySelector('body').append(a);
-a.click();
-document.body.removeChild(a);
+// let a = document.createElement("a");
+// //a.href = window.URL.createObjectURL(new Blob([DOM], { type: "text/html" }));
+// a.href = window.URL.createObjectURL(f);
+// a.download = "demo.html";
+// a.textContent = "Download here";
+// document.body.appendChild(a);
+// // document.querySelector('body').append(a);
+// a.click();
+// document.body.removeChild(a);
 
 // let a = document.createElement('a');
 // a.href = url;
